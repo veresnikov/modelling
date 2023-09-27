@@ -6,6 +6,9 @@ PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 
 pushd "$PARENT_DIR" >/dev/null || exit 1
 
+echo "Cloning submodule"
+git submodule update --init --remote --recursive
+
 echo "Build artifact/2048-game"
 docker build . --file=Docker/Artifact.Dockerfile --tag=arifact/2048-game
 
