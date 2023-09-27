@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Usage start-game <port>
+# Example start-game 8080
+
+set -o errexit
+
+if [ -z "$1" ]; then
+    echo "port not specified"
+    exit 1
+fi
+
+PORT="$1"
+PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
+IMAGE=modelling/game
+
+pushd "$PARENT_DIR" >/dev/null || exit 1
+
+docker run \
+  --name="game-$PORT" \
+  -p="$PORT:8080" \
+  -d \
+  --rm \
+  "$IMAGE"
+
+popd >/dev/null || exit 1

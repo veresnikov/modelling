@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
+
+pushd "$PARENT_DIR" >/dev/null || exit 1
+
+echo "Build artifact/2048-game"
+docker build . --file=Docker/Artifact.Dockerfile --tag=arifact/2048-game
+
+echo "Build modelling/game"
+docker build . --file=Docker/Dockerfile --tag=modelling/game
+
+popd >/dev/null || exit 1

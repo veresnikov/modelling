@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+PARENT_DIR=$(dirname "$(dirname "$(readlink -f "$0")")")
+
+pushd "$PARENT_DIR" >/dev/null || exit 1
+
+bin/start-game 8080
+bin/start-game 8081
+
+popd >/dev/null || exit 1
